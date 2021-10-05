@@ -2,6 +2,8 @@ package com.example.doanchuyennganh;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,9 +27,15 @@ public class ResultLogin extends AppCompatActivity {
     }
 
     private void addControl() {
-        txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
+        Button button = (Button) findViewById(R.id.button1);
         /**Set value*/
         txtUserName.setText(account.getSdt());
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtUserName.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }

@@ -20,6 +20,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.doanchuyennganh.model.Account;
+import com.example.doanchuyennganh.model.DangKy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,16 +33,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText edtUserName;
     private EditText edtPassWord;
-    private EditText edtEmail;
+    private EditText edtPhone;
     private Button btnRegister;
     private Button btnLogin;
     private ProgressDialog pDialog;
 
-    public static final String REGISTER_URL = "https://doanchuyennghanh.000webhostapp.com/login.php";
+    public static final String REGISTER_URL = "https://doanchuyennghanh.000webhostapp.com/register.php";
 
-    public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
-    public static final String KEY_EMAIL = "email";
+    public static final String KEY_TENTAIKHOAN = "tentk";
+    public static final String KEY_MATKHAU = "mk";
+    public static final String KEY_SDT = "sdt";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,12 +56,12 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Get data input
-                String username = edtUserName.getText().toString().trim();
-                String password = edtPassWord.getText().toString().trim();
-                String email = edtEmail.getText().toString().trim();
+                String tentk = edtUserName.getText().toString().trim();
+                String mk = edtPassWord.getText().toString().trim();
+                String sdt = edtPhone.getText().toString().trim();
 
                 //Call method register
-                registerUser(username, password, email);
+                registerUser(tentk, mk, sdt);
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -78,22 +79,15 @@ public class RegisterActivity extends AppCompatActivity {
         edtPassWord = (EditText) findViewById(R.id.editPassword);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        edtEmail = (EditText) findViewById(R.id.editEmail);
+        edtPhone = (EditText) findViewById(R.id.editPhone);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Đang đăng ký...");
         pDialog.setCanceledOnTouchOutside(false);
     }
 
-    /**
-     * Method register
-     *
-     * @param username
-     * @param password
-     * @param email    result json
-     */
-    private void registerUser(final String username, final String password, final String email) {
+    private void registerUser(final String tentk, final String mk, final String sdt) {
 
-        if (checkEditText(edtUserName) && checkEditText(edtPassWord) && checkEditText(edtEmail) && isValidEmail(email)) {
+        if (checkEditText(edtUserName) && checkEditText(edtPassWord) && checkEditText(edtPhone)) {
             pDialog.show();
             StringRequest registerRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                     new Response.Listener<String>() {
@@ -104,8 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getInt("success") == 1) {
-                                    Account account = new Account();
-                                    account.setSdt(jsonObject.getString("Sdt"));
+                                    DangKy dangKy = new DangKy();
+                                    dangKy.setTentk(jsonObject.getString("tentk"));
                                     message = jsonObject.getString("message");
                                     Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
                                     //Start LoginActivity
@@ -131,9 +125,9 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put(KEY_USERNAME, username);
-                    params.put(KEY_PASSWORD, password);
-                    params.put(KEY_EMAIL, email);
+                    params.put(KEY_TENTAIKHOAN, tentk);
+                    params.put(KEY_MATKHAU, mk);
+                    params.put(KEY_SDT, sdt);
                     return params;
                 }
 
@@ -151,18 +145,6 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         else {
             editText.setError("Vui lòng nhập dữ liệu!");
-        }
-        return false;
-    }
-
-    /**
-     * Check Email
-     */
-    private boolean isValidEmail(String target) {
-        if (target.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
-            return true;
-        else {
-            edtEmail.setError("Email sai định dạng!");
         }
         return false;
     }
