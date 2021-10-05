@@ -3,30 +3,21 @@ package com.example.doanchuyennganh.model;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-    private String userName;
-    private String email;
+    private String Sdt;
+
+    public Account(String sdt) {
+        Sdt = sdt;
+    }
 
     public Account() {
+
     }
 
-    public Account(String userName, String email) {
-        this.userName = userName;
-        this.email = email;
+    public String getSdt() {
+        return Sdt;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setSdt(String sdt) {
+        Sdt = sdt;
     }
 }

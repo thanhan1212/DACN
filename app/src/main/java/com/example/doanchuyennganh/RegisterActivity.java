@@ -105,8 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getInt("success") == 1) {
                                     Account account = new Account();
-                                    account.setUserName(jsonObject.getString("user_name"));
-                                    account.setEmail(jsonObject.getString("email"));
+                                    account.setSdt(jsonObject.getString("Sdt"));
                                     message = jsonObject.getString("message");
                                     Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
                                     //Start LoginActivity

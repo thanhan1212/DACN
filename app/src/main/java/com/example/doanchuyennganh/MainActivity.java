@@ -29,14 +29,14 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private EditText edtUserName;
-    private EditText edtPassWord;
+    private EditText edtSdt;
+    private EditText edtMatkhau;
     private Button btnLogin;
     private Button btnRegister;
     private ProgressDialog pDialog;
     public static final String URL_LOGIN = "https://doanchuyennghanh.000webhostapp.com/login.php";
-    public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_SDT = "Sdt";
+    public static final String KEY_MATKHAU = "Matkhau";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Get value input
-                String username = edtUserName.getText().toString().trim();
-                String password = edtPassWord.getText().toString().trim();
+                String Sdt = edtSdt.getText().toString().trim();
+                String Matkhau = edtMatkhau.getText().toString().trim();
                 // Call method
-                loginAccount(username, password);
+                loginAccount(Sdt, Matkhau);
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addControl() {
-        edtUserName = (EditText) findViewById(R.id.editUsername);
-        edtPassWord = (EditText) findViewById(R.id.editPassword);
+        edtSdt = (EditText) findViewById(R.id.editUsername);
+        edtMatkhau = (EditText) findViewById(R.id.editPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         pDialog = new ProgressDialog(this);
@@ -74,15 +74,9 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setCanceledOnTouchOutside(false);
     }
 
-    /**
-     * Method login
-     *
-     * @param username
-     * @param password result json
-     */
-    public void loginAccount(final String username, final String password) {
+    public void loginAccount(final String Sdt, final String Matkhau) {
 
-        if (checkEditText(edtUserName) && checkEditText(edtPassWord)) {
+        if (checkEditText(edtSdt) && checkEditText(edtMatkhau)) {
             pDialog.show();
             StringRequest requestLogin = new StringRequest(Request.Method.POST, URL_LOGIN,
                     new Response.Listener<String>(){
@@ -94,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getInt("success") == 1) {
                                     Account account = new Account();
-                                    account.setUserName(jsonObject.getString("user_name"));
-                                    account.setEmail(jsonObject.getString("email"));
+                                    account.setSdt(jsonObject.getString("Sdt"));
                                     message = jsonObject.getString("message");
                                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
 
@@ -125,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put(KEY_USERNAME, username);
-                    params.put(KEY_PASSWORD, password);
+                    params.put(KEY_SDT, Sdt);
+                    params.put(KEY_MATKHAU, Matkhau);
                     return params;
                 }
             };

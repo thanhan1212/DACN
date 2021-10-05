@@ -28,7 +28,6 @@ public class ResultLogin extends AppCompatActivity {
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
         /**Set value*/
-        txtUserName.setText(account.getUserName());
-        txtEmail.setText(account.getEmail());
+        txtUserName.setText(account.getSdt());
     }
 }
