@@ -3,24 +3,28 @@ package com.example.doanchuyennganh.model;
 import java.io.Serializable;
 
 public class DangKy implements Serializable {
-    private String tentk;
+    private String mail;
     private String sdt;
+    private int quyen;
+    private String loaitk;
 
-    public DangKy(String tentk, String sdt) {
-        this.tentk = tentk;
+    public DangKy(String mail, String sdt, int quyen, String loaitk) {
+        this.mail = mail;
         this.sdt = sdt;
+        this.quyen = quyen;
+        this.loaitk = loaitk;
     }
 
     public DangKy() {
 
     }
 
-    public String getTentk() {
-        return tentk;
+    public String getMail() {
+        return mail;
     }
 
-    public void setTentk(String tentk) {
-        this.tentk = tentk;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getSdt() {
@@ -29,5 +33,21 @@ public class DangKy implements Serializable {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public int getQuyen() {
+        return quyen;
+    }
+
+    public void setQuyen(int quyen) {
+        this.quyen = quyen;
+    }
+
+    public String getLoaitk() {
+        return loaitk;
+    }
+
+    public void setLoaitk(String loaitk) {
+        this.loaitk = loaitk;
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,23 +32,25 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     public static final String TAG = RegisterActivity.class.getSimpleName();
 
-    private EditText edtUserName;
+    private EditText edtmail;
     private EditText edtPassWord;
     private EditText edtPhone;
     private Button btnRegister;
-    private Button btnLogin;
     private ProgressDialog pDialog;
+    private ImageView imgquaylai;
 
     public static final String REGISTER_URL = "https://doanchuyennghanh.000webhostapp.com/register.php";
 
-    public static final String KEY_TENTAIKHOAN = "tentk";
-    public static final String KEY_MATKHAU = "mk";
-    public static final String KEY_SDT = "sdt";
+    public static final String KEY_LOAITK = "LoaiTK";
+    public static final String KEY_QUYEN = "Quyen";
+    public static final String KEY_MATKHAU = "Matkhau";
+    public static final String KEY_SDT = "Sdt";
+    public static final String KEY_MAIL = "Mail";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_activity);
+        setContentView(R.layout.layout);
         addControls();
         addEvents();
     }
@@ -56,38 +59,31 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Get data input
-                String tentk = edtUserName.getText().toString().trim();
+
+
+                String mail= edtmail.getText().toString().trim();
                 String mk = edtPassWord.getText().toString().trim();
                 String sdt = edtPhone.getText().toString().trim();
-
                 //Call method register
-                registerUser(tentk, mk, sdt);
-            }
-        });
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
+                registerUser(mail, sdt, mk,0,"0");
             }
         });
     }
 
     private void addControls() {
 
-        edtUserName = (EditText) findViewById(R.id.editUsername);
-        edtPassWord = (EditText) findViewById(R.id.editPassword);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        edtPhone = (EditText) findViewById(R.id.editPhone);
+        edtmail = (EditText) findViewById(R.id.edt_email_dk);
+        edtPassWord = (EditText) findViewById(R.id.edt_matkhau_dk);
+        btnRegister = (Button) findViewById(R.id.btn_xacnhan_dk);
+        edtPhone = (EditText) findViewById(R.id.edt_sodienthoai_dk);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Đang đăng ký...");
         pDialog.setCanceledOnTouchOutside(false);
     }
 
-    private void registerUser(final String tentk, final String mk, final String sdt) {
+    private void registerUser(final String mail, final String sdt, final String mk, final int quyen,final String loaitk) {
 
-        if (checkEditText(edtUserName) && checkEditText(edtPassWord) && checkEditText(edtPhone)) {
+        if (checkEditText(edtmail) && checkEditText(edtPassWord) && checkEditText(edtPhone)) {
             pDialog.show();
             StringRequest registerRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                     new Response.Listener<String>() {
@@ -99,11 +95,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getInt("success") == 1) {
                                     DangKy dangKy = new DangKy();
-                                    dangKy.setTentk(jsonObject.getString("tentk"));
+                                    dangKy.setSdt(jsonObject.getString("Sdt"));
                                     message = jsonObject.getString("message");
                                     Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
                                     //Start LoginActivity
-                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(RegisterActivity.this, Dangnhap.class);
                                     startActivity(intent);
                                 } else {
                                     message = jsonObject.getString("message");
@@ -125,9 +121,12 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put(KEY_TENTAIKHOAN, tentk);
-                    params.put(KEY_MATKHAU, mk);
+                    params.put(KEY_MAIL, mail);
+
                     params.put(KEY_SDT, sdt);
+                    params.put(KEY_MATKHAU, mk);
+                    params.put(KEY_QUYEN, String.valueOf(quyen));
+                    params.put(KEY_LOAITK, loaitk);
                     return params;
                 }
 

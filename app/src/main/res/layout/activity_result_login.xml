@@ -16,9 +16,14 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:id="@+id/txtUserName" />
-    <Button
-        android:id="@+id/button1"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </Button>
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/txtQuyen" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/txtLoaiTK" />
 </LinearLayout>

@@ -1,7 +1,5 @@
 package com.example.doanchuyennganh;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,13 +27,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class Dangnhap extends AppCompatActivity {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = Dangnhap.class.getSimpleName();
     private EditText edtSdt;
     private EditText edtMatkhau;
     private Button btnLogin;
-    private Button btnRegister;
+    private TextView txtDangKy;
+
     private ProgressDialog pDialog;
     public static final String URL_LOGIN = "https://doanchuyennghanh.000webhostapp.com/login.php";
     public static final String KEY_SDT = "Sdt";
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dangnhap);
         addControl();
         addEvent();
     }
@@ -53,22 +55,25 @@ public class MainActivity extends AppCompatActivity {
                 String Matkhau = edtMatkhau.getText().toString().trim();
                 // Call method
                 loginAccount(Sdt, Matkhau);
+
             }
         });
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        txtDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                Intent intentdk = new Intent(Dangnhap.this, RegisterActivity.class);
+                startActivity(intentdk);
             }
         });
+
+
     }
 
     private void addControl() {
-        edtSdt = (EditText) findViewById(R.id.editUsername);
-        edtMatkhau = (EditText) findViewById(R.id.editPassword);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
+        edtSdt = (EditText) findViewById(R.id.edt_taikhoan_dn);
+        edtMatkhau = (EditText) findViewById(R.id.edt_matkhau_dn);
+        btnLogin = (Button) findViewById(R.id.btn_dangnhap_dn);
+        txtDangKy = (TextView) findViewById(R.id.txt_dangky_dk);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Đang đăng nhập...");
         pDialog.setCanceledOnTouchOutside(false);
@@ -89,15 +94,17 @@ public class MainActivity extends AppCompatActivity {
                                 if (jsonObject.getInt("success") == 1) {
                                     Account account = new Account();
                                     account.setSdt(jsonObject.getString("Sdt"));
+                                    account.setQuyen(jsonObject.getInt("Quyen"));
+                                    account.setLoaiTK(jsonObject.getString("LoaiTK"));
                                     message = jsonObject.getString("message");
-                                    Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Dangnhap.this, message, Toast.LENGTH_SHORT).show();
 
-                                    Intent intent = new Intent(MainActivity.this, ResultLogin.class);
+                                    Intent intent = new Intent(Dangnhap.this, ResultLogin.class);
                                     intent.putExtra("login", account);
                                     startActivity(intent);
                                 } else {
                                     message = jsonObject.getString("message");
-                                    Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Dangnhap.this, message, Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
