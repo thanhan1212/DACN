@@ -1,4 +1,4 @@
-package com.example.doanchuyennganh;
+package com.example.doanchuyennganh.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.doanchuyennganh.R;
+import com.example.doanchuyennganh.ResultLogin;
 import com.example.doanchuyennganh.model.Account;
 
 import org.json.JSONException;
@@ -34,6 +36,7 @@ public class Dangnhap extends AppCompatActivity {
     private EditText edtMatkhau;
     private Button btnLogin;
     private TextView txtDangKy;
+
 
     private ProgressDialog pDialog;
     public static final String URL_LOGIN = "https://doanchuyennghanh.000webhostapp.com/login.php";
@@ -69,6 +72,7 @@ public class Dangnhap extends AppCompatActivity {
 
     }
 
+
     private void addControl() {
         edtSdt = (EditText) findViewById(R.id.edt_taikhoan_dn);
         edtMatkhau = (EditText) findViewById(R.id.edt_matkhau_dn);
@@ -92,16 +96,24 @@ public class Dangnhap extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getInt("success") == 1) {
+
                                     Account account = new Account();
+                                    account.setIdtk(jsonObject.getString("IDTK"));
                                     account.setSdt(jsonObject.getString("Sdt"));
+                                    account.setHinhdaidien(jsonObject.getString("Hinhdaidien"));
+                                    account.setGmail(jsonObject.getString("Mail"));
+                                    account.setHovaten(jsonObject.getString("hovaten"));
                                     account.setQuyen(jsonObject.getInt("Quyen"));
                                     account.setLoaiTK(jsonObject.getString("LoaiTK"));
+                                    //account.setNgaysinh(jsonObject.getLong("Ngaysinh"));
                                     message = jsonObject.getString("message");
+
                                     Toast.makeText(Dangnhap.this, message, Toast.LENGTH_SHORT).show();
 
-                                    Intent intent = new Intent(Dangnhap.this, ResultLogin.class);
+                                    Intent intent = new Intent(Dangnhap.this, Capnhat.class);
                                     intent.putExtra("login", account);
                                     startActivity(intent);
+
                                 } else {
                                     message = jsonObject.getString("message");
                                     Toast.makeText(Dangnhap.this, message, Toast.LENGTH_LONG).show();

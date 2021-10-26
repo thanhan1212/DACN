@@ -23,6 +23,7 @@ public class ResultLogin extends AppCompatActivity {
         addControl();
     }
 
+
     private void addControl() {
         txtUserName = (TextView) findViewById(R.id.txtUserName);
         txtQuyen = (TextView) findViewById(R.id.txtQuyen);

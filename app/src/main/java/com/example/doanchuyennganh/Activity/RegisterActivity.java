@@ -1,4 +1,4 @@
-package com.example.doanchuyennganh;
+package com.example.doanchuyennganh.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.doanchuyennganh.model.Account;
+import com.example.doanchuyennganh.R;
 import com.example.doanchuyennganh.model.DangKy;
 
 import org.json.JSONException;
@@ -68,6 +68,13 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser(mail, sdt, mk,0,"0");
             }
         });
+        imgquaylai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this,Dangnhap.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addControls() {
@@ -75,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtmail = (EditText) findViewById(R.id.edt_email_dk);
         edtPassWord = (EditText) findViewById(R.id.edt_matkhau_dk);
         btnRegister = (Button) findViewById(R.id.btn_xacnhan_dk);
+        imgquaylai = (ImageView) findViewById(R.id.imgb_quaylai_dk);
         edtPhone = (EditText) findViewById(R.id.edt_sodienthoai_dk);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Đang đăng ký...");
