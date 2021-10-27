@@ -60,7 +60,7 @@ public class ChinhsuaAdapter extends BaseAdapter {
 
             holder.txthovaten = (EditText) view.findViewById(R.id.edt_hovaten_cn);
             holder.txtngaythangnamsinh = (EditText) view.findViewById(R.id.edt_ngaythangnamsinh_cn);
-            holder.txtgioitinh = (EditText) view.findViewById(R.id.edt_gioitinh_cn);
+//            holder.txtgioitinh = (EditText) view.findViewById(R.id.edt_gioitinh_cn);
             holder.txtsodienthoai = (EditText) view.findViewById(R.id.edt_sodienthoai_cn);
             holder.txtmail = (EditText) view.findViewById(R.id.edt_mail_cn);
             //holder.imgEdit = (EditText) view.findViewById(R.id.imgb_Suathongtin);
