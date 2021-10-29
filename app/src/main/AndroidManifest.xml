@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Doanchuyennganh">
         <activity
+            android:name=".Activity.Goithanhvien"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.GopY"
+            android:exported="true" />
+        <activity
             android:name=".Activity.Khovideo"
             android:exported="true" />
         <activity
